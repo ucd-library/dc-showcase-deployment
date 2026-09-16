@@ -1,33 +1,42 @@
 services:
 
   postgres:
-    image: ${IMAGE_PROJECT_ANDUIN_ANDUIN_PG}
+    image: postgres:16
     environment:
       POSTGRES_USER: postgres
       POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_DB: dcf
     ports:
       - "5432:5432"
     volumes:
       - pg_data:/var/lib/postgresql/data
-
+      - ../../../dc-showcase/services/init/postgres:/docker-entrypoint-initdb.d:ro
 
   gateway:
-    image: ${IMAGE_PROJECT_ANDUIN_AUTH_GATEWAY}
-    env_file:
-      - .env
+    image: ${IMAGE_DC_SHOWCASE_DCS_GATEWAY}
+    environment:
+      - PORT=3002
+      - CLIENT_URL=http://client:8000
+      - IIIF_URL=http://iiif:80
+      - IIIF_BASE_PATH=/fcgi-bin/iipsrv.fcgi?IIIF=
+      - CASKFS_URL=http://cask:3001/cask
+      - CASKFS_GOLD_BASE_PATH=/gold/digital-dev
+      - CASKFS_USER=dcs-gateway
+      - LOG_LEVEL=debug
     depends_on:
-      - postgres
+      - client
+    networks:
+      - default
+      - argonath-shared
+    ports:
+      - "3002:3002"
 
   # Same custom image real dev/prod runs (kustomize/elastic-search/base/
   # statefulset.yaml) - reused directly, single-node, rather than a plain
   # upstream elasticsearch image, so any baked-in analyzer/plugin behavior
   # config.elasticsearch.compactTypeInclude relies on matches real clusters.
-  # See docs/PORT-PLAN.md (dams repo) Phase 3 - this is what "confirm the
-  # dcf ES instance is reachable" actually needs a place to verify against
-  # locally: the `client` service resolving ES_HOST, and (once populated)
-  # diffing documents produced by two different indexing paths.
   elasticsearch:
-    image: us-west1-docker.pkg.dev/digital-ucdavis-edu/pub/fin-elastic-search:sandbox
+    image: ${IMAGE_DC_SHOWCASE_DCS_ELASTIC_SEARCH}
     environment:
       - discovery.type=single-node
       - cluster.name=elasticsearch
@@ -38,12 +47,13 @@ services:
       - "9200:9200"
     volumes:
       - es_data:/usr/share/elasticsearch/data
+    networks:
+      - default
+      - argonath-shared
 
   client:
-    build:
-      context: ../../../dams/services/client
+    image: ${IMAGE_DC_SHOWCASE_DCS_CLIENT}
     depends_on:
-      - cask
       - elasticsearch
     environment:
       - CLIENT_ENV=dev
@@ -56,31 +66,27 @@ services:
       - ES_HOST=elasticsearch
       - ES_PORT=9200
     volumes:
-      - ../../../dams/services/client/controllers:/app/controllers
-      - ../../../dams/services/client/lib:/app/lib
-      - ../../../dams/services/client/models:/app/models
-      - ../../../dams/services/client/index.js:/app/index.js
-      - ../../../dams/services/client/config.js:/app/config.js
-      - shared-cask-data:/opt/cache
+      - ../../../dc-showcase/services/client/controllers:/app/controllers
+      - ../../../dc-showcase/services/client/lib:/app/lib
+      - ../../../dc-showcase/services/client/models:/app/models
+      - ../../../dc-showcase/services/client/index.js:/app/index.js
+      - ../../../dc-showcase/services/client/config.js:/app/config.js
+    networks:
+      - default
+      - argonath-shared
     ports:
       - "8000:8000"
 
-  # dams/services/iipimage's own image (built via .cork-build, contextPath
-  # services/iipimage) - see docs/PORT-PLAN.md Phase 2. Its lighttpd.conf
-  # hardcodes FILESYSTEM_PREFIX=/etc/gcs-fuse at build time (not env-var
-  # driven), so IIIF identifiers are always paths relative to that root
-  # regardless of what backs it - here, the same caskfs_data volume `cask`
-  # itself writes to (CaskFS's CAS root), read-only, standing in for the
-  # real direct-mount-of-CaskFS's-CAS-root PVC this phase still needs to
-  # spike in real k8s. USE_LOCAL_GCSFUSE deliberately left unset - that
-  # only matters for the real GCS-fuse path, not this local stand-in.
+  # dc-showcase's own services/iipimage build (see .cork-build's
+  # dcs-iipimage-server) - lighttpd.conf's FILESYSTEM_PREFIX is baked in at
+  # build time to /opt/cask, matching the standardized CaskFS CAS mount path
+  # used across argonath and dc-showcase - so IIIF identifiers are always
+  # paths relative to that root, backed here by the same caskfs_data volume
+  # argonath's own `cask` service writes to (CaskFS's CAS root), read-only.
   iiif:
-    # no :sandbox/:local-dev tag exists in this registry for this image
-    # (unlike the argonath-side images above) - pinned to the most recent
-    # real tag (matches kustomize/iiif/overlays/dev) instead.
-    image: us-west1-docker.pkg.dev/ucdlib-dams/pub/dams-iipimage-server:2.9.3
+    image: ${IMAGE_DC_SHOWCASE_DCS_IIPIMAGE_SERVER}
     volumes:
-      - caskfs_data:/etc/gcs-fuse:ro
+      - shared-cask-data:/opt/cask:ro
     ports:
       - "8080:80"
 
@@ -96,10 +102,13 @@ services:
     depends_on:
       - elasticsearch
 
+networks:
+  argonath-shared:
+    external: true
+    name: argonath-shared
+
 volumes:
   pg_data:
-    driver: local
-  caskfs_data:
     driver: local
   es_data:
     driver: local
