@@ -14,6 +14,7 @@ services:
 
   gateway:
     image: ${IMAGE_DC_SHOWCASE_DCS_GATEWAY}
+    command: ["bash", "-c", "tail -f /dev/null"]
     environment:
       - PORT=3002
       - CLIENT_URL=http://client:8000
@@ -23,6 +24,9 @@ services:
       - CASKFS_GOLD_BASE_PATH=/gold/digital-dev
       - CASKFS_USER=dcs-gateway
       - LOG_LEVEL=debug
+    volumes:
+      - ../../../dc-showcase/services/gateway/lib:/service/lib
+      - ../../../dc-showcase/services/gateway/index.js:/service/index.js
     depends_on:
       - client
     networks:
@@ -53,6 +57,7 @@ services:
 
   client:
     image: ${IMAGE_DC_SHOWCASE_DCS_CLIENT}
+    command: ["bash", "-c", "tail -f /dev/null"]
     depends_on:
       - elasticsearch
     environment:
