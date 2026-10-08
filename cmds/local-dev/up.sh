@@ -14,6 +14,5 @@ fi
 docker compose -f compose/local-dev/compose.yaml -p dc-showcase up -d
 
 echo "Digital Collection Showcase deployment (local-dev) is up and running."
-echo " - Gateway URL      : http://localhost:3002"
-echo " - Client URL       : http://localhost:8000"
+echo " - Site (gateway)   : http://localhost:8000"
 echo " - Kibana URL       : http://localhost:5601"
