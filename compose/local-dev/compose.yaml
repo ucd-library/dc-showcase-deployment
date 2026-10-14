@@ -51,6 +51,12 @@ services:
       - network.host=0.0.0.0
       - xpack.security.enabled=false
       - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf 'localhost:9200/_cluster/health?wait_for_status=yellow&timeout=5s'"]
+      interval: 10s
+      timeout: 10s
+      retries: 12
+      start_period: 30s
     ports:
       - "9200:9200"
     volumes:
@@ -66,7 +72,8 @@ services:
     env_file:
       - .env
     depends_on:
-      - elasticsearch
+      elasticsearch:
+        condition: service_healthy
     environment:
       - CLIENT_ENV=dev
       - PG_HOST=postgres
