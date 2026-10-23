@@ -1,6 +1,7 @@
 services:
 
-  postgres:
+  # 'postgres' collides with argonath's on argonath-shared
+  dcs-postgres:
     image: postgres:16
     environment:
       POSTGRES_USER: postgres
@@ -11,6 +12,9 @@ services:
     volumes:
       - pg_data:/var/lib/postgresql/data
       - ../../../dc-showcase/services/init/postgres:/docker-entrypoint-initdb.d:ro
+    networks:
+      - default
+      - argonath-shared
 
   gateway:
     image: ${IMAGE_DC_SHOWCASE_DCS_GATEWAY}
@@ -76,7 +80,7 @@ services:
         condition: service_healthy
     environment:
       - CLIENT_ENV=dev
-      - PG_HOST=postgres
+      - PG_HOST=dcs-postgres
       - PG_DATABASE=dcf
       - CASK_URL=http://cask:3001
       - CASK_PATH_PREFIX=/cask
