@@ -25,7 +25,7 @@ Then:
 - `http://localhost:8000` - public showcase client/server (`/health`, `/api`)
 - `http://localhost:3001` - cask directly
 - `http://localhost:4000` - auth-gateway (AUTH_ENABLED=false by default - see `.env`)
-- `http://localhost:5432` - shared postgres
+- `localhost:5432` - argonath's postgres; dc-showcase uses its `dcf` database (schema applied by argonath-deployment's `cmds/init.sh`)
 - `http://localhost:9200` - elasticsearch (same custom image real dev/prod runs, single-node here)
 
 
