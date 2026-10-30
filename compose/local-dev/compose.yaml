@@ -71,6 +71,7 @@ services:
       - CASK_URL=http://cask:3001
       - CASK_PATH_PREFIX=/cask
       - CASK_USER=dc-dev-service
+      - CASK_GOLD_BASE_PATH=/gold/digital-dev
       - IIIF_HOST=http://iiif
       - ES_HOST=elasticsearch
       - ES_PORT=9200
