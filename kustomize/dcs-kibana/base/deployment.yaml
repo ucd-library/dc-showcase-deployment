@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dcs-kibana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dcs-kibana
+  template:
+    metadata:
+      labels:
+        app: dcs-kibana
+    spec:
+      containers:
+      - name: service
+        image: docker.elastic.co/kibana/kibana:8.4.3
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5601
+        resources:
+          requests:
+            memory: "200Mi"
+            cpu: "200m"
+        env:
+        - name: ELASTICSEARCH_HOSTS
+          value: "http://dcs-elasticsearch:9200"
+        - name: ELASTICSEARCH_URL
+          value: "http://dcs-elasticsearch:9200"
+        - name: xpack.security.enabled
+          value: "false"
+        - name: telemetry.enabled
+          value: "false"

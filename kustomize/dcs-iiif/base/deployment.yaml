@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dcs-iiif
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: dcs-iiif
+  template:
+    metadata:
+      labels:
+        app: dcs-iiif
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchLabels:
+                  app: dcs-iiif
+      containers:
+      - name: service
+        image: us-west1-docker.pkg.dev/argonath-508815/pub/dcs-iipimage-server:main
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "200Mi"
+            cpu: "200m"
+        volumeMounts:
+          - name: caskfs-volume-claim
+            mountPath: /opt/cask
+            readOnly: true
+      volumes:
+      - name: caskfs-volume-claim
+        persistentVolumeClaim:
+          claimName: caskfs

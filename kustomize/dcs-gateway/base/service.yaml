@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dcs-gateway
+spec:
+  selector:
+    app: dcs-gateway
+  ports:
+    - port: 3002
+      protocol: TCP
+      targetPort: 3002

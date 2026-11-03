@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: dcs-elasticsearch
+spec:
+  template:
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchLabels:
+                  app: dcs-elasticsearch
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: intended-for
+                    operator: In
+                    values:
+                      - argonath-prod-frontend
+                      - es-quorum
+      containers:
+        - name: elasticsearch
+          image: us-west1-docker.pkg.dev/argonath-508815/pub/dcs-elastic-search:main
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        storageClassName: microk8s-hostpath
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 20Gi

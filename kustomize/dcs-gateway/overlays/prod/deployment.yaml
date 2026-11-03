@@ -1,0 +1,12 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dcs-gateway
+spec:
+  template:
+    spec:
+      containers:
+        - name: service
+          image: us-west1-docker.pkg.dev/argonath-508815/pub/dcs-gateway:main
+      nodeSelector:
+        intended-for: argonath-prod-frontend

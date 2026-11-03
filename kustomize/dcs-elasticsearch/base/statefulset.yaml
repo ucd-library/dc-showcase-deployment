@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: dcs-elasticsearch
+spec:
+  serviceName: dcs-elasticsearch
+  replicas: 3
+  selector:
+    matchLabels:
+      app: dcs-elasticsearch
+  template:
+    metadata:
+      labels:
+        app: dcs-elasticsearch
+    spec:
+      securityContext:
+        fsGroup: 1000
+        runAsUser: 1000
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchLabels:
+                  app: dcs-elasticsearch
+      containers:
+      - name: elasticsearch
+        image: us-west1-docker.pkg.dev/argonath-508815/pub/dcs-elastic-search:main
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+        securityContext:
+          capabilities:
+            drop: ["ALL"]
+          runAsNonRoot: true
+          runAsUser: 1000
+        ports:
+        - containerPort: 9200
+          name: rest
+        - containerPort: 9300
+          name: inter-node
+        env:
+          # overrides the image's baked-in elasticsearch.yml
+          # (discovery.type: single-node) for real quorum mode. Dotted names
+          # are valid k8s container env var names.
+          - name: "node.name"
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: "discovery.type"
+            value: "multi-node"
+          - name: "discovery.seed_hosts"
+            value: "dcs-elasticsearch"
+          - name: "cluster.initial_master_nodes"
+            value: "dcs-elasticsearch-0,dcs-elasticsearch-1,dcs-elasticsearch-2"
+          - name: "ES_JAVA_OPTS"
+            value: "-Xms512m -Xmx512m"
+        volumeMounts:
+        - name: data
+          mountPath: /usr/share/elasticsearch/data
+      initContainers:
+      - name: fix-permissions
+        image: busybox
+        command: ['sh', '-c', 'chown -R 1000:1000 /usr/share/elasticsearch/data']
+        securityContext:
+          runAsUser: 0
+          privileged: true
+        volumeMounts:
+        - name: data
+          mountPath: /usr/share/elasticsearch/data
+      - name: increase-vm-max-map
+        image: busybox
+        command: ['sysctl', '-w', 'vm.max_map_count=262144']
+        securityContext:
+          runAsUser: 0
+          privileged: true
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 20Gi
