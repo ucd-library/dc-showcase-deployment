@@ -1,0 +1,35 @@
+{
+  "project" : "dc-showcase",
+
+  "environments" : {
+    "prod" : {
+      "project" : "argonath-508815",
+      "platform" : "microk8s",
+      "namespace" : "argonath-prod",
+      "kubeconfig" : {
+        "secret" : "libk8s-argonath-prod-deployer",
+        "context" : "argonath-prod-deploy-context"
+      }
+    }
+  },
+
+  "secrets" : {
+    "prod" : [
+      {
+        "k8sName" : "dcs-auth-secret",
+        "mappings" : [{
+          "gcsmName" : "libk8s-argonath-prod-dcs-auth-secret",
+          "k8sProperty" : "AUTH_SECRET"
+        }]
+      }
+    ]
+  },
+
+  "services" : [
+    { "path" : "kustomize/dcs-gateway",       "group" : "dc-showcase" },
+    { "path" : "kustomize/dcs-client",        "group" : "dc-showcase" },
+    { "path" : "kustomize/dcs-iiif",          "group" : "dc-showcase" },
+    { "path" : "kustomize/dcs-elasticsearch", "group" : "dc-showcase" },
+    { "path" : "kustomize/dcs-kibana",        "group" : "dc-showcase" }
+  ]
+}

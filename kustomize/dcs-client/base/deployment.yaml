@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dcs-client
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: dcs-client
+  template:
+    metadata:
+      labels:
+        app: dcs-client
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchLabels:
+                  app: dcs-client
+      containers:
+      - name: service
+        image: us-west1-docker.pkg.dev/argonath-508815/pub/dcs-client:main
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+        resources:
+          requests:
+            memory: "200Mi"
+            cpu: "200m"
+        env:
+        - name: CLIENT_ENV
+          value: "prod"
+        - name: PG_HOST
+          value: "postgres"
+        - name: PG_DATABASE
+          value: "dcf"
+        - name: CASK_URL
+          value: "http://cask:3001"
+        - name: CASK_PATH_PREFIX
+          value: "/cask"
+        - name: CASK_USER
+          value: "dc-prod-service"
+        - name: CASK_GOLD_BASE_PATH
+          value: "/gold/digital-prod"
+        - name: IIIF_HOST
+          value: "http://dcs-iiif"
+        - name: ES_HOST
+          value: "dcs-elasticsearch"
+        - name: ES_PORT
+          value: "9200"
+        - name: PG_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-password
+              key: POSTGRES_PASSWORD
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 5
+          timeoutSeconds: 2
+          periodSeconds: 5
+          failureThreshold: 1

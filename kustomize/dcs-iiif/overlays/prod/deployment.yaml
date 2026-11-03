@@ -1,0 +1,14 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dcs-iiif
+spec:
+  template:
+    spec:
+      containers:
+        - name: service
+          # TODO: no cork-build-registry wiring yet for dc-showcase - pin a
+          # real built tag here before first deploy.
+          image: us-west1-docker.pkg.dev/argonath-508815/pub/dcs-iipimage-server:0.1.0
+      nodeSelector:
+        intended-for: argonath-prod-frontend

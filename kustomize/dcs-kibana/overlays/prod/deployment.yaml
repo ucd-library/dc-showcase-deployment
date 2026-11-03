@@ -1,0 +1,9 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dcs-kibana
+spec:
+  template:
+    spec:
+      nodeSelector:
+        intended-for: argonath-prod-frontend

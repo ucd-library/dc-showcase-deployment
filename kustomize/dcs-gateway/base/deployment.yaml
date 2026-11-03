@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dcs-gateway
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: dcs-gateway
+  template:
+    metadata:
+      labels:
+        app: dcs-gateway
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchLabels:
+                  app: dcs-gateway
+      containers:
+      - name: service
+        image: us-west1-docker.pkg.dev/argonath-508815/pub/dcs-gateway:main
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3002
+        resources:
+          requests:
+            memory: "200Mi"
+            cpu: "200m"
+        env:
+        - name: PORT
+          value: "3002"
+        - name: PUBLIC_URL
+          value: "https://digital-collections.library.ucdavis.edu"
+        - name: CLIENT_URL
+          value: "http://dcs-client:8000"
+        - name: IIIF_URL
+          value: "http://dcs-iiif:80"
+        - name: IIIF_BASE_PATH
+          value: "/fcgi-bin/iipsrv.fcgi?IIIF="
+        - name: CASKFS_URL
+          value: "http://cask:3001/cask"
+        - name: CASKFS_GOLD_BASE_PATH
+          value: "/gold/digital-prod"
+        - name: CASKFS_USER
+          value: "dcs-gateway"
+        - name: LOG_LEVEL
+          value: "info"
+        - name: OIDC_BASE_URL
+          value: "https://auth.library.ucdavis.edu/realms/internal"
+        - name: OIDC_CLIENT_ID
+          value: "argonath"
+        envFrom:
+          - secretRef:
+              name: oidc-client-secret
+          - secretRef:
+              name: dcs-auth-secret
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 3002
+          initialDelaySeconds: 5
+          timeoutSeconds: 2
+          periodSeconds: 5
+          failureThreshold: 1
