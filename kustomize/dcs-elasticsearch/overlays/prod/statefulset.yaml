@@ -5,10 +5,6 @@ metadata:
 spec:
   template:
     spec:
-      # Full affinity block repeated here (not just nodeAffinity added) -
-      # kustomize's strategic-merge patch replaces the whole `affinity` map
-      # rather than deep-merging independent affinity types, so the
-      # podAntiAffinity from base must be restated alongside nodeAffinity.
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -27,9 +23,7 @@ spec:
                       - es-quorum
       containers:
         - name: elasticsearch
-          # TODO: no cork-build-registry wiring yet for dc-showcase - pin a
-          # real built tag here before first deploy.
-          image: us-west1-docker.pkg.dev/argonath-508815/pub/dcs-elastic-search:0.1.0
+          image: us-west1-docker.pkg.dev/argonath-508815/pub/dcs-elastic-search:main
   volumeClaimTemplates:
     - metadata:
         name: data
