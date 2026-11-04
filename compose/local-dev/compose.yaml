@@ -75,7 +75,11 @@ services:
       - IIIF_HOST=http://iiif
       - ES_HOST=elasticsearch
       - ES_PORT=9200
+      # argonath writes yearPublishedStart/End for every dated item
+      - USE_DATE_RANGE_FIELDS=true
     volumes:
+      - ../../../dc-showcase/services/client/bin:/app/bin
+      - ../../../dc-showcase/services/client/init:/app/init
       - ../../../dc-showcase/services/client/controllers:/app/controllers
       - ../../../dc-showcase/services/client/lib:/app/lib
       - ../../../dc-showcase/services/client/client/public/elements:/app/client/public/elements
