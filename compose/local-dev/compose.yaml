@@ -8,6 +8,7 @@ services:
       - .env
     environment:
       - PORT=3002
+      - PUBLIC_URL=http://localhost:8000
       - CLIENT_URL=http://client:8000
       - IIIF_URL=http://iiif:80
       - IIIF_BASE_PATH=/fcgi-bin/iipsrv.fcgi?IIIF=
