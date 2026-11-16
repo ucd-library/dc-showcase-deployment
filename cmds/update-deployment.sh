@@ -47,6 +47,7 @@ echo "Updating dc-showcase $ENVIRONMENT to version: $VERSION"
 
 edit dcs-gateway       deployment  "$REGISTRY/dcs-gateway:$VERSION"          service       $ENVIRONMENT
 edit dcs-client        deployment  "$REGISTRY/dcs-client:$VERSION"           service       $ENVIRONMENT
+edit init              job         "$REGISTRY/dcs-client:$VERSION"           service       $ENVIRONMENT
 edit dcs-iiif          deployment  "$REGISTRY/dcs-iipimage-server:$VERSION" service       $ENVIRONMENT
 edit dcs-elasticsearch statefulset "$REGISTRY/dcs-elastic-search:$VERSION"   elasticsearch $ENVIRONMENT
 

@@ -1,0 +1,40 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: dcs-init
+spec:
+  backoffLimit: 2
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: service
+        image: us-west1-docker.pkg.dev/argonath-508815/pub/dcs-client:main
+        imagePullPolicy: Always
+        command: ["dcs-prod-init"]
+        resources:
+          requests:
+            memory: "200Mi"
+            cpu: "200m"
+        env:
+        - name: CLIENT_ENV
+          value: "prod"
+        - name: PG_HOST
+          value: "postgres"
+        - name: PG_DATABASE
+          value: "dcf"
+        - name: CASK_URL
+          value: "http://cask:3001"
+        - name: CASK_PATH_PREFIX
+          value: "/cask"
+        # the seed files are written as dcs-gateway, which argonath's prod
+        # init makes a cask admin, not the dcs-client's own dc-prod-service
+        - name: CASK_USER
+          value: "dcs-gateway"
+        - name: CASK_GOLD_BASE_PATH
+          value: "/gold/digital-prod"
+        - name: PG_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-password
+              key: POSTGRES_PASSWORD
