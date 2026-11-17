@@ -26,6 +26,7 @@
   },
 
   "services" : [
+    { "path" : "kustomize/init" },
     { "path" : "kustomize/dcs-gateway",       "group" : "dc-showcase" },
     { "path" : "kustomize/dcs-client",        "group" : "dc-showcase" },
     { "path" : "kustomize/dcs-iiif",          "group" : "dc-showcase" },
