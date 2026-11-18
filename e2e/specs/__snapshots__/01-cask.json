@@ -1,0 +1,36 @@
+{
+  "bronze": [
+    "/bronze/preservica/<runId>/latest/by-ref/<ref:one>/entity.json",
+    "/bronze/preservica/<runId>/latest/by-ref/<ref:one>/identifiers.json",
+    "/bronze/preservica/<runId>/latest/by-ref/<ref:one>/media/Preservation/tiny-1.jpg",
+    "/bronze/preservica/<runId>/latest/by-ref/<ref:one>/media/Preservation/tiny-1.jpg.fixity.json",
+    "/bronze/preservica/<runId>/latest/by-ref/<ref:one>/metadata/0.xml",
+    "/bronze/preservica/<runId>/latest/by-ref/<ref:one>/representations.json",
+    "/bronze/preservica/<runId>/latest/by-ref/<ref:folder>/children.json",
+    "/bronze/preservica/<runId>/latest/by-ref/<ref:folder>/entity.json",
+    "/bronze/preservica/<runId>/latest/by-ref/<ref:folder>/identifiers.json",
+    "/bronze/preservica/<runId>/latest/tree/<runId>-item-one/identifiers.json",
+    "/bronze/preservica/<runId>/latest/tree/<runId>-item-one/metadata.json",
+    "/bronze/preservica/<runId>/latest/tree/<runId>-item-one/Preservation/tiny-1.jpg",
+    "/bronze/preservica/<runId>/latest/tree/identifiers.json",
+    "/bronze/preservica/<runId>/latest/tree/metadata.json",
+    "/bronze/preservica/<runId>/manifest.json"
+  ],
+  "gold": [
+    "/gold/digital-dev/collections/<runId>/collection.jsonld.json",
+    "/gold/digital-dev/collections/<runId>/tree/<runId>-item-one/item.jsonld.json",
+    "/gold/digital-dev/collections/<runId>/tree/<runId>-item-one/manifest.json",
+    "/gold/digital-dev/collections/<runId>/tree/<runId>-item-one/Preservation/tiny-1.jpg"
+  ],
+  "silver": [
+    "/silver/preservica/<runId>/latest/tree/<runId>-item-one/ocr/manifest.json",
+    "/silver/preservica/<runId>/latest/tree/<runId>-item-one/ocr/ocr-stats.json",
+    "/silver/preservica/<runId>/latest/tree/<runId>-item-one/ocr/ocr.djvu",
+    "/silver/preservica/<runId>/latest/tree/<runId>-item-one/ocr/prep.jpg",
+    "/silver/preservica/<runId>/latest/tree/<runId>-item-one/public-frontend-derivatives/images/tiny-1.jpg/images/large.jpg",
+    "/silver/preservica/<runId>/latest/tree/<runId>-item-one/public-frontend-derivatives/images/tiny-1.jpg/images/manifest.json",
+    "/silver/preservica/<runId>/latest/tree/<runId>-item-one/public-frontend-derivatives/images/tiny-1.jpg/images/medium.jpg",
+    "/silver/preservica/<runId>/latest/tree/<runId>-item-one/public-frontend-derivatives/images/tiny-1.jpg/images/small.jpg",
+    "/silver/preservica/<runId>/latest/tree/<runId>-item-one/public-frontend-derivatives/images/tiny-1.jpg/images/tiled.tif"
+  ]
+}

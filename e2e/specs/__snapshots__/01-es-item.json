@@ -1,0 +1,129 @@
+{
+  "@graph": [
+    {
+      "@id": "https://digital.ucdavis.edu/item/ark:/99999/fk4<runId>-one",
+      "@type": [
+        "http://schema.org/CreativeWork"
+      ],
+      "ark": "ark:/99999/fk4<runId>-one",
+      "associatedMedia": [
+        {
+          "@id": "https://digital.ucdavis.edu/item/ark:/99999/fk4<runId>-one#media/tiny-1.jpg"
+        }
+      ],
+      "description": "e2e item one",
+      "identifier": [
+        "ark:/99999/fk4<runId>-one",
+        "ark:/99999/fk4<runId>-one"
+      ],
+      "image": {
+        "@id": "https://digital.ucdavis.edu/item/ark:/99999/fk4<runId>-one#media/tiny-1.jpg"
+      },
+      "isPartOf": [
+        {
+          "@id": "https://digital.ucdavis.edu/collection/ark:/99999/fk4<runId>"
+        }
+      ],
+      "name": "<runId> item one"
+    },
+    {
+      "@id": "https://digital.ucdavis.edu/item/ark:/99999/fk4<runId>-one#media/tiny-1.jpg",
+      "@type": [
+        "http://schema.org/ImageObject"
+      ],
+      "contentUrl": "cask://gold/digital-dev/collections/<runId>/tree/<runId>-item-one/Preservation/tiny-1.jpg",
+      "fileFormat": "image/jpeg",
+      "fileFormatSimple": "image",
+      "fileSize": 1058,
+      "name": "tiny-1.jpg"
+    }
+  ],
+  "@id": "https://digital.ucdavis.edu/item/ark:/99999/fk4<runId>-one",
+  "_id": "https://digital.ucdavis.edu/item/ark:/99999/fk4<runId>-one",
+  "clientMedia": {
+    "https://digital.ucdavis.edu/item/ark:/99999/fk4<runId>-one#media/tiny-1.jpg": {
+      "download": [
+        {
+          "fileSize": 1058,
+          "label": "jpg",
+          "url": "/cask/api/fs/gold/digital-dev/collections/<runId>/tree/<runId>-item-one/Preservation/tiny-1.jpg"
+        }
+      ],
+      "images": {
+        "large": {
+          "size": {
+            "height": "64",
+            "width": "64"
+          },
+          "url": "/cask/api/fs/silver/preservica/<runId>/latest/tree/<runId>-item-one/public-frontend-derivatives/images/tiny-1.jpg/images/large.jpg"
+        },
+        "medium": {
+          "size": {
+            "height": "64",
+            "width": "64"
+          },
+          "url": "/cask/api/fs/silver/preservica/<runId>/latest/tree/<runId>-item-one/public-frontend-derivatives/images/tiny-1.jpg/images/medium.jpg"
+        },
+        "ocr": {
+          "imageSize": "large",
+          "size": {
+            "height": "64",
+            "width": "64"
+          },
+          "url": "/cask/api/fs/silver/preservica/<runId>/latest/tree/<runId>-item-one/ocr/ocr.djvu"
+        },
+        "small": {
+          "size": {
+            "height": "64",
+            "width": "64"
+          },
+          "url": "/cask/api/fs/silver/preservica/<runId>/latest/tree/<runId>-item-one/public-frontend-derivatives/images/tiny-1.jpg/images/small.jpg"
+        },
+        "tiled": {
+          "iiif": "/iiif/silver/preservica/<runId>/latest/tree/<runId>-item-one/public-frontend-derivatives/images/tiny-1.jpg/images/tiled.tif"
+        }
+      }
+    }
+  },
+  "displayImage": {
+    "@id": "https://digital.ucdavis.edu/item/ark:/99999/fk4<runId>-one#media/tiny-1.jpg",
+    "images": {
+      "large": {
+        "size": {
+          "height": "64",
+          "width": "64"
+        },
+        "url": "/cask/api/fs/silver/preservica/<runId>/latest/tree/<runId>-item-one/public-frontend-derivatives/images/tiny-1.jpg/images/large.jpg"
+      },
+      "medium": {
+        "size": {
+          "height": "64",
+          "width": "64"
+        },
+        "url": "/cask/api/fs/silver/preservica/<runId>/latest/tree/<runId>-item-one/public-frontend-derivatives/images/tiny-1.jpg/images/medium.jpg"
+      },
+      "ocr": {
+        "imageSize": "large",
+        "size": {
+          "height": "64",
+          "width": "64"
+        },
+        "url": "/cask/api/fs/silver/preservica/<runId>/latest/tree/<runId>-item-one/ocr/ocr.djvu"
+      },
+      "small": {
+        "size": {
+          "height": "64",
+          "width": "64"
+        },
+        "url": "/cask/api/fs/silver/preservica/<runId>/latest/tree/<runId>-item-one/public-frontend-derivatives/images/tiny-1.jpg/images/small.jpg"
+      },
+      "tiled": {
+        "iiif": "/iiif/silver/preservica/<runId>/latest/tree/<runId>-item-one/public-frontend-derivatives/images/tiny-1.jpg/images/tiled.tif"
+      }
+    }
+  },
+  "name": "<runId> item one",
+  "roles": [
+    "admin"
+  ]
+}

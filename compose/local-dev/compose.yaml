@@ -124,11 +124,13 @@ services:
 networks:
   argonath-shared:
     external: true
-    name: argonath-shared
+    # must match argonath's (ARGONATH_SHARED_NETWORK there too)
+    name: ${ARGONATH_SHARED_NETWORK:-argonath-shared}
 
 volumes:
   es_data:
     driver: local
   shared-cask-data:
     external: true
-    name: argonath_caskfs_data
+    # argonath's caskfs volume: <argonath compose project>_caskfs_data
+    name: ${ARGONATH_CASKFS_VOLUME:-argonath_caskfs_data}

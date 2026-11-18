@@ -1,0 +1,53 @@
+{
+  "items": [
+    {
+      "identifiers": [
+        {
+          "id_type": "ark",
+          "id_value": "ark:/99999/fk4<runId>-one"
+        }
+      ],
+      "name": "bronze/preservica/<runId>/latest/tree/<runId>-item-one"
+    },
+    {
+      "identifiers": [
+        {
+          "id_type": "ark",
+          "id_value": "ark:/99999/fk4<runId>-one"
+        }
+      ],
+      "name": "bronze/preservica/<runId>/latest/tree/<runId>-item-one-updated"
+    },
+    {
+      "identifiers": [
+        {
+          "id_type": "ark",
+          "id_value": "ark:/99999/fk4<runId>-two"
+        }
+      ],
+      "name": "bronze/preservica/<runId>/latest/tree/<runId>-item-two"
+    }
+  ],
+  "jobResults": [
+    {
+      "failed": false,
+      "item": null,
+      "job": "collection_rollup_job"
+    },
+    {
+      "failed": false,
+      "item": "bronze/preservica/<runId>/latest/tree/<runId>-item-one",
+      "job": "process_item_job"
+    },
+    {
+      "failed": false,
+      "item": "bronze/preservica/<runId>/latest/tree/<runId>-item-one-updated",
+      "job": "process_item_job"
+    },
+    {
+      "failed": false,
+      "item": "bronze/preservica/<runId>/latest/tree/<runId>-item-two",
+      "job": "process_item_job"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+# Specs share one collection and build on each other, so they run in file
+# order and stop at the first failure. lib/hooks.js always cleans up.
+# The spec list is in package.json's test script, not here: mocha adds a
+# config 'spec' to any files given on the command line.
+require: lib/hooks.js
+sort: true
+bail: true
+timeout: 1800000
+reporter: spec

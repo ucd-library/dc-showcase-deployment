@@ -1,0 +1,17 @@
+{
+  "name": "@ucd-lib/dc-showcase-e2e",
+  "version": "0.1.0",
+  "private": true,
+  "description": "End-to-end tests: Preservica -> argonath -> dc-showcase, against the local dev stack",
+  "type": "module",
+  "scripts": {
+    "test": "mocha 'specs/*.test.js'",
+    "cleanup": "node bin/cleanup.js"
+  },
+  "dependencies": {
+    "@ucd-lib/argonath": "file:../../argonath/ops",
+    "commander": "^14.0.1",
+    "mocha": "^11.1.0",
+    "pg": "^8.13.1"
+  }
+}
