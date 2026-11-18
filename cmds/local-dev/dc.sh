@@ -1,4 +1,4 @@
 #! /bin/bash
 
 set -e
-docker compose -p dc-showcase "$@"
+docker compose -p ${DCS_COMPOSE_PROJECT:-dc-showcase} "$@"

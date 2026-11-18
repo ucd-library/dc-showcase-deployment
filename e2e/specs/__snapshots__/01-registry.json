@@ -1,0 +1,33 @@
+{
+  "items": [
+    {
+      "identifiers": [
+        {
+          "id_type": "ark",
+          "id_value": "ark:/99999/fk4<runId>-one"
+        }
+      ],
+      "name": "bronze/preservica/<runId>/latest/tree/<runId>-item-one"
+    }
+  ],
+  "jobResults": [
+    {
+      "failed": false,
+      "item": null,
+      "job": "collection_rollup_job"
+    },
+    {
+      "failed": false,
+      "item": "bronze/preservica/<runId>/latest/tree/<runId>-item-one",
+      "job": "process_item_job"
+    }
+  ],
+  "registration": {
+    "source_type": "preservica",
+    "status": "active",
+    "workflow_tags": [
+      "e2e-testing",
+      "sync"
+    ]
+  }
+}
