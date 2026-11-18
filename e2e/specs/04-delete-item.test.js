@@ -1,6 +1,6 @@
 /**
- * Deleting an item in Preservica: its tree entry, silver/gold folders and
- * ES docs are removed; its bronze by-ref copy is kept by design.
+ * Deleting an item in Preservica: its tree entry, bronze by-ref copy,
+ * silver/gold folders and ES docs are removed.
  */
 import assert from 'node:assert/strict';
 import ctx from '../lib/run-context.js';
@@ -32,9 +32,10 @@ describe('04 delete an item', function() {
     await waitForQuiet();
   });
 
-  it('removes silver and page docs but keeps bronze by-ref', async function() {
+  it('removes bronze by-ref, silver and page docs', async function() {
+    // the tree step purges by-ref right after the tree entry
+    assert.equal(await cask.exists(`${p.byRef}/entity.json`), false, 'by-ref removed');
     assert.equal(await cask.exists(p.silver), false, 'silver folder removed');
-    assert.ok(await cask.exists(`${p.byRef}/entity.json`), 'by-ref kept (never-delete bronze)');
     const pages = await es.findPages(ctx.runId);
     assert.equal(pages.filter(d => JSON.stringify(d).includes(item.ark)).length, 0, 'no page-search docs');
   });

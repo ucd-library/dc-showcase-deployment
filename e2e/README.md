@@ -20,7 +20,7 @@ The specs run in order against one collection named `e2e-<date>-<time>-<rand>`, 
 | `01-new-collection` | Creates a folder tagged `argonath=e2e-testing` holding one single-image item, plus a control folder tagged `e2e-testing-bronze` | Auto-registration with tags, `itemsRoot=tree` manifest, bronze/silver/gold files, registry and job results, ES docs indexed private. The control folder reaches bronze only. |
 | `02-add-item` | Ingests a second item | Only the new item is processed, and the first item's gold files are unchanged |
 | `03-update-item` | Retitles item one and replaces its image | Item one is re-processed with the new title and new derivatives. The tree and gold folders move. Item two is untouched. |
-| `04-delete-item` | Deletes item two in Preservica | Tree entry, silver, gold and ES docs are removed. Bronze `by-ref` is kept by design. |
+| `04-delete-item` | Deletes item two in Preservica | Tree entry, bronze `by-ref`, silver, gold and ES docs are removed. |
 | `05-visibility` | Switches the collection public, adds an item, switches it back to private (needs admin auth, otherwise skipped) | ES `roles` flip on every doc, and the anonymous API follows. The new item is indexed public. |
 
 Everything the run created is removed at the end, including after a failure, unless `E2E_KEEP=true`.
