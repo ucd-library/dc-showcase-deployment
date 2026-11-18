@@ -29,8 +29,8 @@
     { "path" : "kustomize/init" },
     { "path" : "kustomize/dcs-gateway",       "group" : "dc-showcase" },
     { "path" : "kustomize/dcs-client",        "group" : "dc-showcase" },
-    { "path" : "kustomize/dcs-iiif",          "group" : "dc-showcase" },
-    { "path" : "kustomize/dcs-elasticsearch", "group" : "dc-showcase" },
-    { "path" : "kustomize/dcs-kibana",        "group" : "dc-showcase" }
+    { "path" : "kustomize/dcs-iiif"  },
+    { "path" : "kustomize/dcs-elasticsearch"  },
+    { "path" : "kustomize/dcs-kibana"  }
   ]
 }
