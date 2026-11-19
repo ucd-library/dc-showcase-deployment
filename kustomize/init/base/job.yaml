@@ -33,6 +33,10 @@ spec:
           value: "dcs-gateway"
         - name: CASK_GOLD_BASE_PATH
           value: "/gold/digital-prod"
+        - name: ES_HOST
+          value: "dcs-elasticsearch"
+        - name: ES_PORT
+          value: "9200"
         - name: PG_PASSWORD
           valueFrom:
             secretKeyRef:

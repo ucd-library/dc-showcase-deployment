@@ -49,6 +49,8 @@ spec:
           value: "dc-prod-service"
         - name: CASK_GOLD_BASE_PATH
           value: "/gold/digital-prod"
+        - name: OIDC_CLIENT_ID
+          value: "argonath"
         - name: IIIF_HOST
           value: "http://dcs-iiif"
         - name: ES_HOST

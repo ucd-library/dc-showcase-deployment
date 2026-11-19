@@ -2,7 +2,9 @@
 
 # Run the dc-showcase init Job (kustomize/init) against an environment. The
 # Job runs `dcs-prod-init` in the dcs-client image, which installs the app's
-# dcf schema and seeds its cask gold files (hero banner, browse by images).
+# dcf schema, seeds its cask gold files (hero banner, browse by images) and
+# creates the elasticsearch indices/aliases (dcs-client only verifies them at
+# startup in prod, so it won't start until this has run).
 # Safe to re-run.
 #
 # Run after argonath's own init (argonath-deployment's cmds/prod-init.sh): it
